@@ -3,6 +3,7 @@ import 'package:bvn_selfie/back_button.dart';
 import 'package:bvn_selfie/textstyle.dart';
 import 'package:bvn_selfie/verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MainIntro extends StatefulWidget {
   const MainIntro({super.key});
@@ -12,6 +13,7 @@ class MainIntro extends StatefulWidget {
 }
 
 class _MainIntroState extends State<MainIntro> {
+  final bvnController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,25 @@ class _MainIntroState extends State<MainIntro> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
+                setState(() {});
+                if ((BVNPlugin.getBVN() == null ||
+                        BVNPlugin.getBVN().toString().length < 10) &&
+                    bvnController.text.length < 10) {
+                  Fluttertoast.showToast(
+                      msg: "Please enter your BVN",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.TOP,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: BVNPlugin.getBaseColor(),
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                  return;
+                }
+                if ((BVNPlugin.getBVN() == null ||
+                    BVNPlugin.getBVN().toString().length < 10)) {
+                  BVNPlugin.setBVN(bvnController.text);
+                }
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -39,27 +60,70 @@ class _MainIntroState extends State<MainIntro> {
                     color: Colors.white, fontWeight: FontWeight.w600),
               ),
             )),
-        const SizedBox(height: 24)
+        const SizedBox(height: 34)
       ]),
       body: SafeArea(
         child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
               const AppBackButton(),
               const SizedBox(height: 24),
               Text("Take a clear selfie.",
                   style: headling1.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
               const SizedBox(height: 8),
               Text("We need your BVN so you can get verified on Raven bank",
                   style: subtitle.copyWith(color: const Color(0xff8B8B8B))),
               const SizedBox(
                 height: 24,
               ),
+              if (BVNPlugin.getBVN() == null ||
+                  BVNPlugin.getBVN().toString().length < 10) ...[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text("Provide Your BVN",
+                            style: subtitle.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: const Color.fromARGB(255, 78, 78, 78),
+                                fontSize: 14)),
+                        Text(" *",
+                            style: subtitle.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.red,
+                                fontSize: 14)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    TextField(
+                        keyboardType: TextInputType.number,
+                        controller: bvnController,
+                        decoration: InputDecoration(
+                            hintText: "Enter your BVN here...",
+                            hintStyle: subtitle.copyWith(color: Colors.grey),
+                            fillColor: const Color(0xFFF4F4F4),
+                            filled: true,
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: Color(0xFFF4F4F4), width: 0)),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: Color(0xFFF4F4F4), width: 0)),
+                            border: InputBorder.none)),
+                  ],
+                ),
+              ],
+              const SizedBox(height: 34),
               Text("Tips",
                   style: subtitle.copyWith(
                       fontWeight: FontWeight.w700, fontSize: 14)),

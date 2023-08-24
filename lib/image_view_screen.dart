@@ -76,7 +76,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                           color: Colors.white, fontWeight: FontWeight.w600),
                     ),
                   )),
-              const SizedBox(height: 24)
+              const SizedBox(height: 34)
             ],
           ),
           body: Padding(

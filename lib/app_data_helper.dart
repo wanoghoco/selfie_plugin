@@ -6,7 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BVNPlugin {
-  final String clientBVN;
+  String? clientBVN;
   final Color baseColor;
   final Function(dynamic) onSucess;
   final String bearerToken;
@@ -22,7 +22,7 @@ class BVNPlugin {
 
   static BVNPlugin getInstance(
           {required String bearer,
-          required String clientBvn,
+          String? clientBvn,
           required Color baseColor,
           required Function(dynamic) success,
           required Function(dynamic) failiure}) =>
@@ -57,8 +57,12 @@ class BVNPlugin {
     return;
   }
 
-  static String getBVN() {
+  static String? getBVN() {
     return _instance!.clientBVN;
+  }
+
+  static void setBVN(String bvn) {
+    _instance?.clientBVN = bvn;
   }
 
   static Color getBaseColor() {
