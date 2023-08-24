@@ -88,7 +88,7 @@ String loadAsset(String asset) {
   return "packages/bvn_selfie/asset/$asset";
 }
 
-Future<XFile> compressImage({required File file}) async {
+Future<File> compressImage({required File file}) async {
   Directory tempDir = await getTemporaryDirectory();
   String dir = "${tempDir.absolute.path}/bvn_photo.jpeg";
   var result = await FlutterImageCompress.compressAndGetFile(
