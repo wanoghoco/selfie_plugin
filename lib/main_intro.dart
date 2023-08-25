@@ -105,6 +105,8 @@ class _MainIntroState extends State<MainIntro> {
                       height: 4,
                     ),
                     TextField(
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                         keyboardType: TextInputType.number,
                         controller: bvnController,
                         decoration: InputDecoration(
