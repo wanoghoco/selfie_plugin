@@ -86,7 +86,11 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Take a clear selfie",
-                    style: headling1.copyWith(fontSize: 24)),
+                    style: headling1.copyWith(
+                      fontSize: 20,
+                      color: BVNPlugin.getBaseColor(),
+                      fontWeight: FontWeight.bold,
+                    )),
               ),
               const SizedBox(
                 height: 8,

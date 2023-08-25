@@ -56,15 +56,15 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                         Image.asset(
                           loadAsset("success.png"),
                           color: BVNPlugin.getBaseColor(),
-                          height: 200,
+                          height: 160,
                         ),
                         Positioned(
                           right: 0,
                           bottom: -16,
                           child: Image.asset(
                             loadAsset("check.png"),
-                            height: 54,
-                            width: 54,
+                            height: 44,
+                            width: 44,
                             color: BVNPlugin.getBaseColor(),
                           ),
                         ),
