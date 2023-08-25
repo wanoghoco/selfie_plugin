@@ -73,6 +73,7 @@ class _MainIntroState extends State<MainIntro> {
               Text("Take a clear selfie.",
                   style: headling1.copyWith(
                     fontSize: 20,
+                    color: BVNPlugin.getBaseColor(),
                     fontWeight: FontWeight.bold,
                   )),
               const SizedBox(height: 8),
