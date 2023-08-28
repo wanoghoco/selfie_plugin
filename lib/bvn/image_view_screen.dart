@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/bvn/progress_loader.dart';
+import 'package:bvn_selfie/progress_loader.dart';
 import 'package:bvn_selfie/bvn/verification_screen.dart';
 import 'package:bvn_selfie/bvn/verification_succesful.dart';
 import 'package:bvn_selfie/server/server.dart';
