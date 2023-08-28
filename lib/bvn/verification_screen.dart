@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/bvn_selfie.dart';
-import 'package:bvn_selfie/bvn_selfie_view.dart';
-import 'package:bvn_selfie/image_view_screen.dart';
+import 'package:bvn_selfie/bvn/bvn_selfie.dart';
+import 'package:bvn_selfie/bvn/bvn_selfie_view.dart';
+import 'package:bvn_selfie/bvn/image_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

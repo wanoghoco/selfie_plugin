@@ -1,18 +1,18 @@
 import 'package:bvn_selfie/app_data_helper.dart';
 import 'package:bvn_selfie/back_button.dart';
+import 'package:bvn_selfie/bvn/verification_screen.dart';
 import 'package:bvn_selfie/textstyle.dart';
-import 'package:bvn_selfie/verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class MainIntro extends StatefulWidget {
-  const MainIntro({super.key});
+class EnterBVNScreen extends StatefulWidget {
+  const EnterBVNScreen({super.key});
 
   @override
-  State<MainIntro> createState() => _MainIntroState();
+  State<EnterBVNScreen> createState() => _EnterBVNScreenState();
 }
 
-class _MainIntroState extends State<MainIntro> {
+class _EnterBVNScreenState extends State<EnterBVNScreen> {
   final bvnController = TextEditingController();
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bvn_selfie/main_intro.dart';
+import 'package:bvn_selfie/bvn/enter_bvn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
@@ -41,7 +41,7 @@ class BVNPlugin {
       PageRouteBuilder(
         settings: const RouteSettings(name: "bvn_service"),
         transitionDuration: const Duration(milliseconds: 350),
-        pageBuilder: (_, __, ___) => const MainIntro(),
+        pageBuilder: (_, __, ___) => const EnterBVNScreen(),
         transitionsBuilder: (_, animation, __, child) {
           return SlideTransition(
             position: Tween<Offset>(

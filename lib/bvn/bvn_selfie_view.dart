@@ -1,6 +1,6 @@
 import 'package:bvn_selfie/app_data_helper.dart';
 import 'package:bvn_selfie/back_button.dart';
-import 'package:bvn_selfie/bvn_selfie.dart';
+import 'package:bvn_selfie/bvn/bvn_selfie.dart';
 import 'package:bvn_selfie/textstyle.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
