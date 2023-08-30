@@ -1,7 +1,7 @@
-import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/back_button.dart';
-import 'package:bvn_selfie/bvn/bvn_selfie.dart';
-import 'package:bvn_selfie/textstyle.dart';
+import 'package:raven_verification/app_data_helper.dart';
+import 'package:raven_verification/back_button.dart';
+import 'package:raven_verification/bvn/bvn_selfie.dart';
+import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,7 +155,7 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
                   Image.asset(
                     loadAsset("frame_cover.png"),
                     color: surfaceColor == Colors.transparent
-                        ? BVNPlugin.getBaseColor()
+                        ? VerificationPlugin.getBaseColor()
                         : surfaceColor,
                     width: size.width * 0.85,
                   ),
@@ -175,7 +175,7 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
                                 strokeWidth: 24,
                                 color: surfaceColor != Colors.transparent
                                     ? Colors.transparent
-                                    : BVNPlugin.getBaseColor(),
+                                    : VerificationPlugin.getBaseColor(),
                                 value: value,
                               ))),
                   SizedBox(
@@ -305,7 +305,7 @@ class Item extends StatelessWidget {
             children: [
               Image.asset(
                 loadAsset(asset),
-                color: BVNPlugin.getBaseColor(),
+                color: VerificationPlugin.getBaseColor(),
                 height: 40,
                 width: 40,
               ),

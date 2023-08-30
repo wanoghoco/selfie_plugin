@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/bvn/bvn_selfie.dart';
-import 'package:bvn_selfie/bvn/bvn_selfie_view.dart';
-import 'package:bvn_selfie/bvn/image_view_screen.dart';
+import 'package:raven_verification/app_data_helper.dart';
+import 'package:raven_verification/bvn/bvn_selfie.dart';
+import 'package:raven_verification/bvn/bvn_selfie_view.dart';
+import 'package:raven_verification/bvn/image_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -37,7 +37,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 1,
-                backgroundColor: BVNPlugin.getBaseColor(),
+                backgroundColor: VerificationPlugin.getBaseColor(),
                 textColor: Colors.white,
                 fontSize: 16.0);
           },

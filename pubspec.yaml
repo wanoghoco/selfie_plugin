@@ -1,4 +1,4 @@
-name: bvn_selfie
+name: raven_verification
 description: A new Flutter project.
 version: 0.0.2
 homepage:
@@ -18,6 +18,7 @@ dependencies:
   mime: ^1.0.4
   fluttertoast: ^8.2.2
   flutter_svg: ^2.0.7
+  camera: ^0.10.5+3
 
 dev_dependencies:
   flutter_test:

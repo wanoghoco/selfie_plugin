@@ -1,4 +1,4 @@
-import "package:bvn_selfie/app_data_helper.dart";
+import "package:raven_verification/app_data_helper.dart";
 import "package:flutter/material.dart";
 
 void showProgressContainer(BuildContext context,
@@ -33,8 +33,8 @@ class SendCheapProgressContainer extends StatelessWidget {
                   children: <Widget>[
                     const SizedBox(width: 10),
                     CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation(BVNPlugin.getBaseColor()),
+                      valueColor: AlwaysStoppedAnimation(
+                          VerificationPlugin.getBaseColor()),
                     ),
                     const SizedBox(width: 15),
                     Text(message,

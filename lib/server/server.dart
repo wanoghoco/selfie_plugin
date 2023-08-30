@@ -1,5 +1,5 @@
 import 'dart:convert' as convert;
-import 'package:bvn_selfie/app_data_helper.dart';
+import 'package:raven_verification/app_data_helper.dart';
 import 'package:dio/dio.dart' as di;
 import "package:http/http.dart" as http;
 import 'package:mime/mime.dart';
@@ -61,7 +61,7 @@ class Server {
     var value = <String, String>{
       'content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${BVNPlugin.getBearer()}',
+      'Authorization': 'Bearer ${VerificationPlugin.getBearer()}',
     };
     return value;
   }

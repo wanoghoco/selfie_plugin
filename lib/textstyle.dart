@@ -1,4 +1,4 @@
-import 'package:bvn_selfie/app_data_helper.dart';
+import 'package:raven_verification/app_data_helper.dart';
 import 'package:flutter/material.dart';
 
 class RavenPayText extends StatelessWidget {
@@ -44,35 +44,36 @@ class RavenPayText extends StatelessWidget {
 TextStyle headling1 = TextStyle(
     fontSize: 24,
     fontFamily: "br_bold",
-    color: BVNPlugin.getBaseColor(),
-    package: "bvn_selfie");
+    color: VerificationPlugin.getBaseColor(),
+    package: "raven_verification");
 TextStyle headling2 = TextStyle(
     fontSize: 16,
     fontFamily: "br_bold",
-    color: BVNPlugin.getBaseColor(),
-    package: "bvn_selfie");
-TextStyle bodyText = TextStyle(
+    color: VerificationPlugin.getBaseColor(),
+    package: "raven_verification");
+TextStyle bodyText = const TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w900,
-  color: BVNPlugin.getBaseColor(),
-  package: "bvn_selfie",
+  color: Color(0xff333333),
+  package: "raven_verification",
   fontFamily: "br_regular",
 );
 TextStyle subtitle = const TextStyle(
   fontSize: 14,
+  color: Color(0xff333333),
   fontFamily: "br_regular",
-  package: "bvn_selfie",
+  package: "raven_verification",
 );
-TextStyle subtitle2 = TextStyle(
+TextStyle subtitle2 = const TextStyle(
     fontFamily: "br_regular",
     fontWeight: FontWeight.w200,
-    color: BVNPlugin.getBaseColor(),
-    package: "bvn_selfie",
+    color: Color(0xff333333),
+    package: "raven_verification",
     fontSize: 12);
 
-TextStyle caption = TextStyle(
+TextStyle caption = const TextStyle(
     fontFamily: "br_light",
     fontWeight: FontWeight.w500,
-    color: BVNPlugin.getBaseColor(),
-    package: "bvn_selfie",
+    color: Color(0xff333333),
+    package: "raven_verification",
     fontSize: 12);

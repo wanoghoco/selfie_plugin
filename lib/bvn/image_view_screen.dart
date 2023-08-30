@@ -2,12 +2,12 @@
 
 import 'dart:io';
 
-import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/progress_loader.dart';
-import 'package:bvn_selfie/bvn/verification_screen.dart';
-import 'package:bvn_selfie/bvn/verification_succesful.dart';
-import 'package:bvn_selfie/server/server.dart';
-import 'package:bvn_selfie/textstyle.dart';
+import 'package:raven_verification/app_data_helper.dart';
+import 'package:raven_verification/progress_loader.dart';
+import 'package:raven_verification/bvn/verification_screen.dart';
+import 'package:raven_verification/bvn/verification_succesful.dart';
+import 'package:raven_verification/server/server.dart';
+import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -45,7 +45,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
                         backgroundColor: MaterialStateProperty.all(
-                            BVNPlugin.getBaseColor())),
+                            VerificationPlugin.getBaseColor())),
                     child: Text(
                       "Use this selfie",
                       style: subtitle.copyWith(
@@ -69,7 +69,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
                         backgroundColor: MaterialStateProperty.all(
-                            BVNPlugin.getBaseColor())),
+                            VerificationPlugin.getBaseColor())),
                     child: Text(
                       "Re-take selfie",
                       style: subtitle.copyWith(
@@ -88,7 +88,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                 child: Text("Take a clear selfie",
                     style: headling1.copyWith(
                       fontSize: 20,
-                      color: BVNPlugin.getBaseColor(),
+                      color: VerificationPlugin.getBaseColor(),
                       fontWeight: FontWeight.bold,
                     )),
               ),
@@ -137,7 +137,10 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
   onVerify() async {
     showProgressContainer(context);
 
-    Map<String, dynamic> form = {"token": BVNPlugin.getBVN(), "type": "bvn"};
+    Map<String, dynamic> form = {
+      "token": VerificationPlugin.getBVN(),
+      "type": "bvn"
+    };
     String filePath = (await compressImage(file: File(widget.imagePath))).path;
     var response = await Server(key: "").uploadFile(filePath, form);
     Navigator.pop(context);
@@ -147,7 +150,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
-          backgroundColor: BVNPlugin.getBaseColor(),
+          backgroundColor: VerificationPlugin.getBaseColor(),
           textColor: Colors.white,
           fontSize: 16.0);
       if (response['status'] == "success") {

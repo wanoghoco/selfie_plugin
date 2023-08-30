@@ -1,4 +1,4 @@
-import 'package:bvn_selfie/app_data_helper.dart';
+import 'package:raven_verification/app_data_helper.dart';
 import 'package:flutter/material.dart';
 
 class VerificationSuccessful extends StatefulWidget {
@@ -20,13 +20,13 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
-                BVNPlugin.closePlugin(context, true);
+                VerificationPlugin.closePlugin(context, true);
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
-                  backgroundColor:
-                      MaterialStateProperty.all(BVNPlugin.getBaseColor())),
+                  backgroundColor: MaterialStateProperty.all(
+                      VerificationPlugin.getBaseColor())),
               child: const Text("Done"),
             )),
         const SizedBox(height: 24)
@@ -55,7 +55,7 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                       children: [
                         Image.asset(
                           loadAsset("success.png"),
-                          color: BVNPlugin.getBaseColor(),
+                          color: VerificationPlugin.getBaseColor(),
                           height: 160,
                         ),
                         Positioned(
@@ -65,7 +65,7 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                             loadAsset("check.png"),
                             height: 44,
                             width: 44,
-                            color: BVNPlugin.getBaseColor(),
+                            color: VerificationPlugin.getBaseColor(),
                           ),
                         ),
                       ],

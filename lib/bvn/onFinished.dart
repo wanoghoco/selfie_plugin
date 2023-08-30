@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:bvn_selfie/app_data_helper.dart';
-import 'package:bvn_selfie/back_button.dart';
+import 'package:raven_verification/app_data_helper.dart';
+import 'package:raven_verification/back_button.dart';
 import 'package:flutter/material.dart';
 
 class OnFinishedScreen extends StatefulWidget {
@@ -25,8 +25,8 @@ class _OnFinishedScreenState extends State<OnFinishedScreen> {
               style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
-                  backgroundColor:
-                      MaterialStateProperty.all(BVNPlugin.getBaseColor())),
+                  backgroundColor: MaterialStateProperty.all(
+                      VerificationPlugin.getBaseColor())),
               child: const Text("Use This Photo"),
             )),
         const SizedBox(height: 24)
