@@ -39,10 +39,6 @@ class _DocIntroScreenState extends State<DocIntroScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  if (VerificationPlugin.getVerificationType() ==
-                      VerificationType.ninstandalone) {
-                    return;
-                  }
                   Navigator.push(
                       context,
                       MaterialPageRoute(

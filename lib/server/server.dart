@@ -13,7 +13,7 @@ class Server {
   final int timeout;
   static http.Client client = http.Client();
   static bool forceLogout = false;
-  static const String _mainBaseUrl = "https://9846-156-0-250-54.ngrok-free.app";
+  static const String _mainBaseUrl = "https://baas.getraventest.com";
 
   /// base class for making http request[Server]
   Server(
@@ -56,18 +56,6 @@ class Server {
     }
   }
 
-  ///private method to return header   [_getHeader]
-  Future<Map<String, String>> _getHeader({bool init = false}) async {
-    var value = <String, String>{
-      'content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': init
-          ? 'Bearer ${VerificationPlugin.getIniToken()}'
-          : 'Bearer ${VerificationPlugin.getBearer()}',
-    };
-    return value;
-  }
-
   Future<dynamic> getRequest() async {
     try {
       return await client
@@ -103,5 +91,17 @@ class Server {
     } catch (ex) {
       return "failed";
     } finally {}
+  }
+
+  ///private method to return header   [_getHeader]
+  Future<Map<String, String>> _getHeader({bool init = false}) async {
+    var value = <String, String>{
+      'content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': init
+          ? 'Bearer ${VerificationPlugin.getIniToken()}'
+          : 'Bearer ${VerificationPlugin.getBearer()}',
+    };
+    return value;
   }
 }

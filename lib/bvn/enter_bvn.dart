@@ -68,6 +68,7 @@ class _EnterBVNScreenState extends State<EnterBVNScreen> {
 
                     if (response['status'] != "success") {
                       showAlert(response['message']);
+                      return;
                     }
                     response = response;
                     VerificationPlugin.setMetaData(

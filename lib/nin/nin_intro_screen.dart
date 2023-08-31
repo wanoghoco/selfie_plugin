@@ -2,7 +2,6 @@ import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/doc/select_doc_type.dart';
 import 'package:raven_verification/nin/enter_nin.dart';
-import 'package:raven_verification/nin/verify_nin.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
 
@@ -42,22 +41,13 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (VerificationPlugin.getVerificationType() ==
-                      VerificationType.ninstandalone) {
+                      VerificationType.ninverification) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const EnterNinScreen()));
                     return;
                   }
-                  if (VerificationPlugin.getVerificationType() ==
-                      VerificationType.ninverification) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerifyNin()));
-                    return;
-                  }
-
                   Navigator.push(
                       context,
                       MaterialPageRoute(

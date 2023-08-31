@@ -9,12 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:raven_verification/doc/doc_intro_screen.dart';
 import 'package:raven_verification/nin/nin_intro_screen.dart';
 
-enum VerificationType {
-  bvnVerification,
-  docVerification,
-  ninstandalone,
-  ninverification
-}
+enum VerificationType { bvnVerification, docVerification, ninverification }
 
 class VerificationPlugin {
   String? clientNumber;
@@ -71,8 +66,7 @@ class VerificationPlugin {
         pageBuilder: (_, __, ___) =>
             (instance.type == VerificationType.bvnVerification)
                 ? const EnterBVNScreen()
-                : (instance.type == VerificationType.ninstandalone ||
-                        instance.type == VerificationType.ninverification)
+                : (instance.type == VerificationType.ninverification)
                     ? const NInIntroScreen()
                     : const DocIntroScreen(),
         transitionsBuilder: (_, animation, __, child) {

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/bvn/verification_screen.dart';
+import 'package:raven_verification/bvn/verification_succesful.dart';
 import 'package:raven_verification/nin/preview_nin.dart';
 import 'package:raven_verification/progress_loader.dart';
 import 'package:raven_verification/server/server.dart';
@@ -19,7 +20,7 @@ class EnterNinScreen extends StatefulWidget {
 
 class _EnterNinScreenState extends State<EnterNinScreen> {
   final ninController = TextEditingController();
-
+  var apiResponse = {};
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -62,32 +63,36 @@ class _EnterNinScreenState extends State<EnterNinScreen> {
                     Navigator.pop(context);
                     if (response == "failed") {
                       showAlert("something went wrong... please try again");
-
                       return;
                     }
 
                     if (response['status'] != "success") {
                       showAlert(response['message']);
+                      return;
                     }
-                    response = response;
+                    apiResponse = response;
                     VerificationPlugin.setMetaData(
                         jsonEncode(response['data'] ?? ""));
                   }
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerificationScreen(
-                                onCapture: (context, imagePath) {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PreviewNinScreen(
-                                                imagePath: imagePath,
-                                              )));
-                                },
-                              )));
+                  if ((apiResponse['data']['bvn'] ?? "") == "") {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerificationScreen(
+                                  onCapture: (context, imagePath) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PreviewNinScreen(
+                                                  imagePath: imagePath,
+                                                )));
+                                  },
+                                )));
+                    return;
+                  }
+                  verifyNIN();
                 },
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
@@ -176,5 +181,31 @@ class _EnterNinScreenState extends State<EnterNinScreen> {
         ),
       ),
     );
+  }
+
+  verifyNIN() async {
+    showProgressContainer(context);
+    var response = await Server(key: "/nin/initiate_nin_with_bvn_verification")
+        .postRequest({
+      "bvn": apiResponse['data']['bvn'],
+      "nin": VerificationPlugin.getClientNumber(),
+      "meta_data": VerificationPlugin.getMetaData()
+    });
+    Navigator.pop(context);
+    if (response.toString() == "failed") {
+      showAlert("something went wrong");
+      return;
+    }
+    if (response['status'] == "success") {
+      showAlert(response['message']);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const VerificationSuccessful(
+                    type: "NIN",
+                  )));
+      return;
+    }
+    showAlert(response['message']);
   }
 }
