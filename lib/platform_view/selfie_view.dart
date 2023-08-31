@@ -1,18 +1,18 @@
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
-import 'package:raven_verification/bvn/bvn_selfie.dart';
+import 'package:raven_verification/platform_view/selfie_service_provider.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class BvnSelfieView extends StatefulWidget {
+class SelfieView extends StatefulWidget {
   final Function(String) onImageCapture;
   final Function(String) onError;
-  final Function(BvnServiceProvider) onInit;
+  final Function(SelfieServiceProvider) onInit;
   final bool allowTakePhoto;
 
-  const BvnSelfieView(
+  const SelfieView(
       {super.key,
       required this.onImageCapture,
       required this.onError,
@@ -20,15 +20,15 @@ class BvnSelfieView extends StatefulWidget {
       required this.onInit});
 
   @override
-  State<BvnSelfieView> createState() => _BvnSelfieViewState();
+  State<SelfieView> createState() => _SelfieViewState();
 }
 
-class _BvnSelfieViewState extends State<BvnSelfieView>
+class _SelfieViewState extends State<SelfieView>
     with SingleTickerProviderStateMixin {
   bool enabled = false;
   late AnimationController _animationController;
   String? actionText;
-  late BvnServiceProvider instance;
+  late SelfieServiceProvider instance;
   double count = 0;
   double before = 0;
 
@@ -44,12 +44,14 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
         }
       }
     });
-    instance = BvnServiceProvider(
-        controller: BvnServiceProviderController(
+    instance = SelfieServiceProvider(
+        controller: SelfieServiceProviderController(
       onProgressChange: (progress) {
         before = count;
         count = progress * 0.25;
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       },
       onTextureCreated: (textureID) {
         textureId = textureID;
@@ -83,19 +85,25 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
         }
         if (recongnitionType == RecongnitionType.FROWN_ONLY) {
           actionText = "FROWN FACE";
-          setState(() {});
-          return;
-        }
-        if (recongnitionType == RecongnitionType.CLOSE_AND_OPEN_SLOWLY) {
-          actionText = "CLOSE AND OPEN EYE SLOWLY";
           if (mounted) {
             setState(() {});
           }
           return;
         }
+        if (recongnitionType == RecongnitionType.CLOSE_AND_OPEN_SLOWLY) {
+          actionText = "CLOSE AND OPEN EYE SLOWLY";
+          if (mounted) {
+            if (mounted) {
+              setState(() {});
+            }
+          }
+          return;
+        }
         if (recongnitionType == RecongnitionType.HEAD_ROTATE) {
           actionText = "ROTATE HEAD SLOWLY";
-          setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
           return;
         }
         if (recongnitionType == RecongnitionType.SMILE_AND_OPEN_ONLY) {
@@ -110,7 +118,7 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
       onInit: widget.onInit,
     ));
 
-    instance.startBvnService();
+    instance.startSelfieService();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),

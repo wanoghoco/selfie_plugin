@@ -1,17 +1,19 @@
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/doc/select_doc_type.dart';
+import 'package:raven_verification/nin/enter_nin.dart';
+import 'package:raven_verification/nin/verify_nin.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
 
-class DocIntroScreen extends StatefulWidget {
-  const DocIntroScreen({super.key});
+class NInIntroScreen extends StatefulWidget {
+  const NInIntroScreen({super.key});
 
   @override
-  State<DocIntroScreen> createState() => _DocIntroScreenState();
+  State<NInIntroScreen> createState() => _NInIntroScreenState();
 }
 
-class _DocIntroScreenState extends State<DocIntroScreen> {
+class _NInIntroScreenState extends State<NInIntroScreen> {
   final bvnController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,21 @@ class _DocIntroScreenState extends State<DocIntroScreen> {
                 onPressed: () async {
                   if (VerificationPlugin.getVerificationType() ==
                       VerificationType.ninstandalone) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EnterNinScreen()));
                     return;
                   }
+                  if (VerificationPlugin.getVerificationType() ==
+                      VerificationType.ninverification) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VerifyNin()));
+                    return;
+                  }
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(

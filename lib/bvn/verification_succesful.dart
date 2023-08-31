@@ -2,7 +2,8 @@ import 'package:raven_verification/app_data_helper.dart';
 import 'package:flutter/material.dart';
 
 class VerificationSuccessful extends StatefulWidget {
-  const VerificationSuccessful({super.key});
+  final String type;
+  const VerificationSuccessful({super.key, this.type = "BVN"});
 
   @override
   State<VerificationSuccessful> createState() => _VerificationSuccessfulState();
@@ -49,8 +50,8 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
-                      const Text(
-                        "Your BVN verifiction was successful.. Thank You",
+                      Text(
+                        "Your ${widget.type} verifiction was successful.. Thank You",
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: size.height * 0.04),

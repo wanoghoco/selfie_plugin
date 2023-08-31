@@ -88,4 +88,20 @@ class Server {
       return "failed";
     } finally {}
   }
+
+  Future<dynamic> postRequest(Map<String, dynamic> body) async {
+    try {
+      return await client
+          .post(Uri.parse(isFull ? key : _mainBaseUrl + key),
+              body: convert.json.encode(body), headers: await _getHeader())
+          .then((response) {
+        if (response.statusCode == 406) {}
+        return convert.jsonDecode(response.body);
+      }).timeout(Duration(seconds: timeout), onTimeout: () {
+        return "failed";
+      });
+    } catch (ex) {
+      return "failed";
+    } finally {}
+  }
 }

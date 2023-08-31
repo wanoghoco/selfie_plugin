@@ -9,17 +9,16 @@ import 'package:raven_verification/bvn/verification_succesful.dart';
 import 'package:raven_verification/server/server.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class ImageViewScreen extends StatefulWidget {
+class PreviewNinScreen extends StatefulWidget {
   final String imagePath;
-  const ImageViewScreen({super.key, required this.imagePath});
+  const PreviewNinScreen({super.key, required this.imagePath});
 
   @override
-  State<ImageViewScreen> createState() => _ImageViewScreenState();
+  State<PreviewNinScreen> createState() => _PreviewNinScreenState();
 }
 
-class _ImageViewScreenState extends State<ImageViewScreen> {
+class _PreviewNinScreenState extends State<PreviewNinScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -67,8 +66,17 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const VerificationScreen()));
+                                builder: (context) => VerificationScreen(
+                                      onCapture: (context, imagePath) {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PreviewNinScreen(
+                                                      imagePath: imagePath,
+                                                    )));
+                                      },
+                                    )));
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -145,27 +153,22 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
     showProgressContainer(context);
 
     Map<String, dynamic> form = {
-      "bvn": VerificationPlugin.getBVN(),
+      "nin": VerificationPlugin.getClientNumber(),
       "meta_data": VerificationPlugin.getMetaData()
     };
     String filePath = (await compressImage(file: File(widget.imagePath))).path;
-    var response = await Server(key: "/bvn/initiate_bvn_verification")
+    var response = await Server(key: "/nin/initiate_nin_verification")
         .uploadFile(filePath, form);
     Navigator.pop(context);
     try {
-      Fluttertoast.showToast(
-          msg: response['message'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: VerificationPlugin.getBaseColor(),
-          textColor: Colors.white,
-          fontSize: 16.0);
+      showAlert(response['message']);
       if (response['status'] == "success") {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const VerificationSuccessful()));
+                builder: (context) => const VerificationSuccessful(
+                      type: "NIN",
+                    )));
         return;
       }
     } catch (ex) {}

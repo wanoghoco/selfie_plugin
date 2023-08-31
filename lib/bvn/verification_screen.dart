@@ -1,21 +1,21 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:raven_verification/app_data_helper.dart';
-import 'package:raven_verification/bvn/bvn_selfie.dart';
-import 'package:raven_verification/bvn/bvn_selfie_view.dart';
-import 'package:raven_verification/bvn/image_view_screen.dart';
+import 'package:raven_verification/platform_view/selfie_service_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:raven_verification/platform_view/selfie_view.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  final Function(BuildContext, String) onCapture;
+  const VerificationScreen({super.key, required this.onCapture});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  late BvnServiceProvider provider;
+  late SelfieServiceProvider provider;
   @override
   Widget build(BuildContext appContext) {
     return GestureDetector(
@@ -24,16 +24,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
       },
       child: Scaffold(
           backgroundColor: Colors.white,
-          body: BvnSelfieView(
+          body: SelfieView(
             allowTakePhoto: false,
             onImageCapture: (imagePath) async {
               provider.destroyer();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ImageViewScreen(
-                            imagePath: imagePath,
-                          )));
+              widget.onCapture(context, imagePath);
             },
             onError: (String errorLog) {
               Fluttertoast.showToast(
@@ -45,7 +40,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   textColor: Colors.black,
                   fontSize: 16.0);
             },
-            onInit: (BvnServiceProvider provider) {
+            onInit: (SelfieServiceProvider provider) {
               this.provider = provider;
             },
           )),

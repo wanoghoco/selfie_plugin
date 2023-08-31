@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-class BvnServiceProvider {
-  final BvnServiceProviderController controller;
+class SelfieServiceProvider {
+  final SelfieServiceProviderController controller;
   static const _methodChannel = MethodChannel('bvn_selfie');
-  BvnServiceProvider({required this.controller}) {
+  SelfieServiceProvider({required this.controller}) {
     _methodChannel.setMethodCallHandler((call) async {
       if (call.method == "showTextureView") {
         controller.onTextureCreated(call.arguments['textureId']);
@@ -44,7 +44,7 @@ class BvnServiceProvider {
     });
   }
 
-  Future<String?> startBvnService() async {
+  Future<String?> startSelfieService() async {
     if (defaultTargetPlatform == TargetPlatform.android) {
       final result = await _methodChannel.invokeMethod<String>('start_camera');
       return result;
@@ -65,15 +65,15 @@ class BvnServiceProvider {
   }
 }
 
-class BvnServiceProviderController {
+class SelfieServiceProviderController {
   final Function(String) onError;
   final Function(int) onTextureCreated;
   final Function(DetectionType) gesturetEvent;
   final Function(RecongnitionType) actionRecongnition;
   final Function(String) onImageCapture;
   final Function(int) onProgressChange;
-  final Function(BvnServiceProvider) onInit;
-  BvnServiceProviderController(
+  final Function(SelfieServiceProvider) onInit;
+  SelfieServiceProviderController(
       {required this.onTextureCreated,
       required this.onError,
       required this.gesturetEvent,
