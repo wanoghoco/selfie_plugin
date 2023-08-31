@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/bvn/verification_screen.dart';
@@ -51,6 +53,7 @@ class _EnterBVNScreenState extends State<EnterBVNScreen> {
                       VerificationPlugin.getBVN().toString().length < 10)) {
                     VerificationPlugin.setBVN(bvnController.text);
                   }
+
                   if (VerificationPlugin.getmetaDataGetterUrl() != null) {
                     showProgressContainer(context);
                     var response = await Server(
@@ -70,7 +73,7 @@ class _EnterBVNScreenState extends State<EnterBVNScreen> {
                           fontSize: 16.0);
                       return;
                     }
-                    if (!(response as Map).containsKey("success")) {
+                    if (!(response as Map).containsKey("status")) {
                       Fluttertoast.showToast(
                           msg: "something went wrong... please try again",
                           toastLength: Toast.LENGTH_SHORT,
@@ -81,12 +84,34 @@ class _EnterBVNScreenState extends State<EnterBVNScreen> {
                           fontSize: 16.0);
                       return;
                     }
-                    VerificationPlugin.setMetaData(response['data']);
+
+                    if (response['status'] == "success") {
+                      Fluttertoast.showToast(
+                          msg: response['message'],
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: VerificationPlugin.getBaseColor(),
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      VerificationPlugin.setMetaData(
+                          jsonEncode(response['data']));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const VerificationScreen()));
+                      return;
+                    }
+                    Fluttertoast.showToast(
+                        msg: response['message'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.TOP,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: VerificationPlugin.getBaseColor(),
+                        textColor: Colors.white,
+                        fontSize: 16.0);
                   }
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const VerificationScreen()));
                 },
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(

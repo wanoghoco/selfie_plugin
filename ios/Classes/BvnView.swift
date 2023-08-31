@@ -150,14 +150,12 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
         weak var weakSelf = self
         faceDetector.process(visionImage) { faces, error in
           guard error == nil, let faces = faces, !faces.isEmpty else {
-              self.step = 1
               self.unlocked=true
-              if !self.running && self.unlocked {
+              if (!self.running && self.unlocked) {
                   self.running = true
-                  
                   let thread = Thread {
                       do {
-                          Thread.sleep(forTimeInterval: 3.5)
+                          Thread.sleep(forTimeInterval: 3)
                       } catch {
                           print(error)
                       }
@@ -171,7 +169,6 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
                   }
                   thread.start()
               }
-             // self.channel.invokeMethod(Helpers.facialGesture,arguments:self.noFaceMap);
             return
           }
             self.unlocked=false
@@ -359,7 +356,7 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
     
     private func rotateHeadXNEG(face:Face)->Bool{
         if(face.hasHeadEulerAngleX){
-            if (face.headEulerAngleX < -2) {
+            if (face.headEulerAngleX < -1) {
                    return true;
                 }
                 return false;
@@ -370,7 +367,7 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
     
     private func rotateHeadYNEG(face:Face)->Bool{
         if(face.hasHeadEulerAngleY){
-            if (face.headEulerAngleY < -4) {
+            if (face.headEulerAngleY < -1) {
                    return true;
                 }
                 return false;

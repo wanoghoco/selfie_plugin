@@ -1,9 +1,9 @@
 import 'dart:convert' as convert;
-import 'package:raven_verification/app_data_helper.dart';
 import 'package:dio/dio.dart' as di;
 import "package:http/http.dart" as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:raven_verification/app_data_helper.dart';
 
 class Server {
   final String key;
@@ -13,7 +13,7 @@ class Server {
   final int timeout;
   static http.Client client = http.Client();
   static bool forceLogout = false;
-  static const String _mainBaseUrl = "https://baas.getraventest.com";
+  static const String _mainBaseUrl = "https://9846-156-0-250-54.ngrok-free.app";
 
   /// base class for making http request[Server]
   Server(
@@ -34,7 +34,7 @@ class Server {
           lookupMimeType(filePath, headerBytes: [0xFF, 0xD8])?.split('/');
 
       return dio
-          .post("/image/match",
+          .post(key,
               data: di.FormData.fromMap({
                 ...form,
                 'image': await di.MultipartFile.fromFile(filePath,
@@ -49,7 +49,7 @@ class Server {
         if (response.statusCode == 200) {
           return convert.jsonDecode(response.data.toString());
         }
-        return "failed";
+        return convert.jsonDecode(response.data.toString());
       });
     } catch (ex) {
       return "failed";
@@ -57,11 +57,13 @@ class Server {
   }
 
   ///private method to return header   [_getHeader]
-  Future<Map<String, String>> _getHeader() async {
+  Future<Map<String, String>> _getHeader({bool init = false}) async {
     var value = <String, String>{
       'content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${VerificationPlugin.getBearer()}',
+      'Authorization': init
+          ? 'Bearer ${VerificationPlugin.getIniToken()}'
+          : 'Bearer ${VerificationPlugin.getBearer()}',
     };
     return value;
   }
@@ -70,7 +72,7 @@ class Server {
     try {
       return await client
           .get(Uri.parse(isFull ? key : _mainBaseUrl + key),
-              headers: await _getHeader())
+              headers: await _getHeader(init: true))
           .then((response) async {
         if (response.statusCode == 406) {}
 

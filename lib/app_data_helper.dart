@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:raven_verification/bvn/enter_bvn.dart';
@@ -15,6 +16,7 @@ class VerificationPlugin {
   final String? metaDataGetterUrl;
   final Function(dynamic) onSucess;
   final String bearerToken;
+  final String? initToken;
   final Function(dynamic) onFailure;
   static VerificationPlugin? _instance;
   String? metaData;
@@ -22,6 +24,7 @@ class VerificationPlugin {
   VerificationPlugin._(
       {required this.clientBVN,
       required this.onFailure,
+      this.initToken,
       this.metaDataGetterUrl,
       this.type = VerificationType.bvnVerification,
       required this.bearerToken,
@@ -33,6 +36,7 @@ class VerificationPlugin {
           {required String bearer,
           String? clientBvn,
           String? metaData,
+          String? initToken,
           VerificationType type = VerificationType.bvnVerification,
           required Color baseColor,
           String? metaDataGetterUrl,
@@ -42,6 +46,7 @@ class VerificationPlugin {
           type: type,
           onFailure: failiure,
           metaData: metaData,
+          initToken: initToken,
           metaDataGetterUrl: metaDataGetterUrl,
           onSucess: success,
           baseColor: baseColor,
@@ -91,8 +96,17 @@ class VerificationPlugin {
     return _instance?.metaDataGetterUrl;
   }
 
-  static String? getMetaData() {
-    return _instance?.metaData;
+  static Map getMetaData() {
+    try {
+      var data = jsonDecode(_instance?.metaData ?? "");
+      return data;
+    } catch (ex) {
+      return {};
+    }
+  }
+
+  static String? getIniToken() {
+    return _instance?.initToken;
   }
 
   static Color getBaseColor() {

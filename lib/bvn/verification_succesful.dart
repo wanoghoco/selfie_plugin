@@ -43,7 +43,7 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: size.height * 0.04),
+                      SizedBox(height: size.height * 0.06),
                       const SizedBox(height: 24),
                       const Text("🥳Verification Successsful",
                           style: TextStyle(
@@ -60,15 +60,15 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                           Image.asset(
                             loadAsset("success.png"),
                             color: VerificationPlugin.getBaseColor(),
-                            height: 160,
+                            height: 120,
                           ),
                           Positioned(
                             right: 0,
-                            bottom: -16,
+                            bottom: -12,
                             child: Image.asset(
                               loadAsset("check.png"),
                               height: 44,
-                              width: 44,
+                              width: 28,
                               color: VerificationPlugin.getBaseColor(),
                             ),
                           ),

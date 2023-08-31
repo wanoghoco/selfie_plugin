@@ -145,11 +145,12 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
     showProgressContainer(context);
 
     Map<String, dynamic> form = {
-      "token": VerificationPlugin.getBVN(),
-      "type": "bvn"
+      "bvn": VerificationPlugin.getBVN(),
+      "meta_data": VerificationPlugin.getMetaData()
     };
     String filePath = (await compressImage(file: File(widget.imagePath))).path;
-    var response = await Server(key: "").uploadFile(filePath, form);
+    var response = await Server(key: "/bvn/initiate_bvn_verification")
+        .uploadFile(filePath, form);
     Navigator.pop(context);
     try {
       Fluttertoast.showToast(
