@@ -152,13 +152,6 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
                             ? surfaceColor
                             : Colors.transparent),
                   ),
-                  Image.asset(
-                    loadAsset("frame_cover.png"),
-                    color: surfaceColor == Colors.transparent
-                        ? VerificationPlugin.getBaseColor()
-                        : surfaceColor,
-                    width: size.width * 0.85,
-                  ),
                   Container(
                       height: size.width * 0.76,
                       width: size.width * 0.76,
@@ -208,15 +201,13 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
             Positioned(
                 top: size.height * 0.03,
                 left: 20,
-                child: const AppBackButton(textColor: Color(0xffEEEEEE))),
+                child: const AppBackButton()),
             Positioned(
               top: size.height * 0.14,
               child: Text(
                 (actionText ?? "PLACE YOUR FACE PROPERLY").toUpperCase(),
                 style: bodyText.copyWith(
-                    fontSize: 18,
-                    color: const Color(0xffEEEEEE),
-                    fontWeight: FontWeight.w900),
+                    fontSize: 16, fontWeight: FontWeight.w900),
               ),
             ),
             if (widget.allowTakePhoto &&
@@ -254,8 +245,10 @@ class _BvnSelfieViewState extends State<BvnSelfieView>
                   width: double.infinity,
                   decoration: BoxDecoration(
                       border: Border.all(
-                          color: const Color(0xffEDE8FB).withOpacity(0.1)),
-                      color: const Color(0xffFAFAFF).withOpacity(0.1),
+                          color: VerificationPlugin.getBaseColor()
+                              .withOpacity(0.3)),
+                      color:
+                          VerificationPlugin.getBaseColor().withOpacity(0.02),
                       borderRadius: BorderRadius.circular(12)),
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,8 +310,7 @@ class Item extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(title,
-              style: subtitle.copyWith(color: Colors.white, fontSize: 12))
+          Text(title, style: subtitle.copyWith(fontSize: 12))
         ],
       ),
     );

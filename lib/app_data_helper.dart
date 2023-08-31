@@ -12,29 +12,37 @@ class VerificationPlugin {
   String? clientBVN;
   final Color baseColor;
   final VerificationType type;
+  final String? metaDataGetterUrl;
   final Function(dynamic) onSucess;
   final String bearerToken;
   final Function(dynamic) onFailure;
   static VerificationPlugin? _instance;
+  String? metaData;
 
   VerificationPlugin._(
       {required this.clientBVN,
       required this.onFailure,
+      this.metaDataGetterUrl,
       this.type = VerificationType.bvnVerification,
       required this.bearerToken,
+      this.metaData,
       required this.baseColor,
       required this.onSucess});
 
   static VerificationPlugin getInstance(
           {required String bearer,
           String? clientBvn,
+          String? metaData,
           VerificationType type = VerificationType.bvnVerification,
           required Color baseColor,
+          String? metaDataGetterUrl,
           required Function(dynamic) success,
           required Function(dynamic) failiure}) =>
       VerificationPlugin._(
           type: type,
           onFailure: failiure,
+          metaData: metaData,
+          metaDataGetterUrl: metaDataGetterUrl,
           onSucess: success,
           baseColor: baseColor,
           clientBVN: clientBvn,
@@ -73,6 +81,18 @@ class VerificationPlugin {
 
   static void setBVN(String bvn) {
     _instance?.clientBVN = bvn;
+  }
+
+  static void setMetaData(String metaData) {
+    _instance?.metaData = metaData;
+  }
+
+  static String? getmetaDataGetterUrl() {
+    return _instance?.metaDataGetterUrl;
+  }
+
+  static String? getMetaData() {
+    return _instance?.metaData;
   }
 
   static Color getBaseColor() {

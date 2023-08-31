@@ -28,6 +28,12 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
     var step=1;
     var sampleBuffer:Any?;
     let uiView=UIView()
+    var canSnap=false;
+    var unlocked=false;
+    var running=false;
+    var processStarted=false;
+    
+    
     let noFaceMap: [String: Any] = [
         "type": Helpers.NO_FACE_DETECTED
         // Add other key-value pairs as needed
@@ -101,6 +107,7 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
                           // Add other key-value pairs as needed
                       ]
 
+                       
                       self.channel.invokeMethod(Helpers.showCameraView, arguments:map)
                        }
               } else {
@@ -144,9 +151,30 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
         faceDetector.process(visionImage) { faces, error in
           guard error == nil, let faces = faces, !faces.isEmpty else {
               self.step = 1
-              self.channel.invokeMethod(Helpers.facialGesture,arguments:self.noFaceMap);
+              self.unlocked=true
+              if !self.running && self.unlocked {
+                  self.running = true
+                  
+                  let thread = Thread {
+                      do {
+                          Thread.sleep(forTimeInterval: 3.5)
+                      } catch {
+                          print(error)
+                      }
+                      
+                      if self.unlocked {
+                          DispatchQueue.main.async {
+                              self.channel.invokeMethod(Helpers.facialGesture,arguments:self.noFaceMap);
+                          }
+                          self.running = false
+                      }
+                  }
+                  thread.start()
+              }
+             // self.channel.invokeMethod(Helpers.facialGesture,arguments:self.noFaceMap);
             return
           }
+            self.unlocked=false
             self.channel.invokeMethod(Helpers.facialGesture,arguments:self.faceMap);
             self.sampleBuffer=sampleBuffer;
             self.processFacials(faces: faces,didOutput: sampleBuffer);
@@ -194,7 +222,6 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
                      self.channel.invokeMethod(Helpers.onProgressChange, arguments: actionMap);
                      return;
                  }
-                 
                  if(rotateHeadXNEG(face: face)&&counter==2){
                      counter+=1;
                      let actionMap: [String: Any] = [
@@ -217,13 +244,34 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
                  }
                  return;
              }
-            self.invokeGesture(actionType:Helpers.SMILE_AND_OPEN_ACTION);
-            if(checkSmileAndBlick(face: face)){
-                if(step==2){
-                 step = -1;
-                    takePhoto(didOutput: sampleBuffer);
-                }
+            if(self.canSnap){
+                self.canSnap=false;
+                takePhoto(didOutput: sampleBuffer);
             }
+            if(!processStarted){
+              //  processStarted=true;
+                let thread = Thread {
+                    do {
+                        Thread.sleep(forTimeInterval: 1.5)
+                    } catch {
+                        print(error)
+                    }
+                        DispatchQueue.main.async {
+                            self.canSnap=true;
+                            self.processStarted=true;
+                        }
+                        self.running = false
+                
+                }
+                thread.start()
+            }
+            self.invokeGesture(actionType:Helpers.SMILE_AND_OPEN_ACTION);
+            //if(checkSmileAndBlick(face: face)){
+           //     if(step==2){
+           //      step = -1;
+              //      takePhoto(didOutput: sampleBuffer);
+           //    }
+           // }
            
 
          }
@@ -285,14 +333,10 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
             }
             return false;
         }
-    
-    
-    
-    
 
     private func rotateHeadX(face:Face)->Bool{
         if(face.hasHeadEulerAngleX){
-            if (face.headEulerAngleX > 25) {
+            if (face.headEulerAngleX > 28) {
                    return true;
                 }
                 return false;
@@ -315,7 +359,7 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
     
     private func rotateHeadXNEG(face:Face)->Bool{
         if(face.hasHeadEulerAngleX){
-            if (face.headEulerAngleX < -5) {
+            if (face.headEulerAngleX < -2) {
                    return true;
                 }
                 return false;
@@ -326,7 +370,7 @@ class BvnView:NSObject,FlutterPlatformView,AVCaptureVideoDataOutputSampleBufferD
     
     private func rotateHeadYNEG(face:Face)->Bool{
         if(face.hasHeadEulerAngleY){
-            if (face.headEulerAngleY < -5) {
+            if (face.headEulerAngleY < -4) {
                    return true;
                 }
                 return false;

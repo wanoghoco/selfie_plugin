@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/doc/ver_preparation.dart';
@@ -36,6 +37,9 @@ class _SelectDocTypeState extends State<SelectDocType> {
                     )),
               ),
               const SizedBox(height: 8),
+              SvgPicture.asset(
+                loadAsset("test.svg"),
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(

@@ -65,4 +65,25 @@ class Server {
     };
     return value;
   }
+
+  Future<dynamic> getRequest() async {
+    try {
+      return await client
+          .get(Uri.parse(isFull ? key : _mainBaseUrl + key),
+              headers: await _getHeader())
+          .then((response) async {
+        if (response.statusCode == 406) {}
+
+        if (response.body.isEmpty) {
+          return "oops, something went wrong...";
+        }
+
+        return convert.jsonDecode(response.body);
+      }).timeout(Duration(seconds: timeout), onTimeout: () {
+        return "failed";
+      });
+    } catch (ex) {
+      return "failed";
+    } finally {}
+  }
 }

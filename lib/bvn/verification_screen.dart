@@ -18,32 +18,37 @@ class _VerificationScreenState extends State<VerificationScreen> {
   late BvnServiceProvider provider;
   @override
   Widget build(BuildContext appContext) {
-    return Scaffold(
-        backgroundColor: const Color(0xFF121212),
-        body: BvnSelfieView(
-          allowTakePhoto: false,
-          onImageCapture: (imagePath) async {
-            provider.destroyer();
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ImageViewScreen(
-                          imagePath: imagePath,
-                        )));
-          },
-          onError: (String errorLog) {
-            Fluttertoast.showToast(
-                msg: errorLog,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.TOP,
-                timeInSecForIosWeb: 1,
-                backgroundColor: VerificationPlugin.getBaseColor(),
-                textColor: Colors.white,
-                fontSize: 16.0);
-          },
-          onInit: (BvnServiceProvider provider) {
-            this.provider = provider;
-          },
-        ));
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus!.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: BvnSelfieView(
+            allowTakePhoto: false,
+            onImageCapture: (imagePath) async {
+              provider.destroyer();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ImageViewScreen(
+                            imagePath: imagePath,
+                          )));
+            },
+            onError: (String errorLog) {
+              Fluttertoast.showToast(
+                  msg: errorLog,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: VerificationPlugin.getBaseColor(),
+                  textColor: Colors.black,
+                  fontSize: 16.0);
+            },
+            onInit: (BvnServiceProvider provider) {
+              this.provider = provider;
+            },
+          )),
+    );
   }
 }
