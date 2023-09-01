@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:raven_verification/bvn/enter_bvn.dart';
+import 'package:raven_verification/bvn/bvn_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
@@ -65,7 +65,7 @@ class VerificationPlugin {
         transitionDuration: const Duration(milliseconds: 350),
         pageBuilder: (_, __, ___) =>
             (instance.type == VerificationType.bvnVerification)
-                ? const EnterBVNScreen()
+                ? const BvnIntroScreen()
                 : (instance.type == VerificationType.ninverification)
                     ? const NInIntroScreen()
                     : const DocIntroScreen(),

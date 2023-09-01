@@ -1,18 +1,17 @@
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
-import 'package:raven_verification/doc/select_doc_type.dart';
-import 'package:raven_verification/nin/enter_nin.dart';
+import 'package:raven_verification/bvn/enter_bvn.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
 
-class NInIntroScreen extends StatefulWidget {
-  const NInIntroScreen({super.key});
+class BvnIntroScreen extends StatefulWidget {
+  const BvnIntroScreen({super.key});
 
   @override
-  State<NInIntroScreen> createState() => _NInIntroScreenState();
+  State<BvnIntroScreen> createState() => _BvnIntroScreenState();
 }
 
-class _NInIntroScreenState extends State<NInIntroScreen> {
+class _BvnIntroScreenState extends State<BvnIntroScreen> {
   final bvnController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,18 +39,10 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  if (VerificationPlugin.getVerificationType() ==
-                      VerificationType.ninverification) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EnterNinScreen()));
-                    return;
-                  }
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SelectDocType()));
+                          builder: (context) => const EnterBVNScreen()));
                 },
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
@@ -59,7 +50,7 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
                     backgroundColor: MaterialStateProperty.all(
                         VerificationPlugin.getBaseColor())),
                 child: Text(
-                  "Verify Now",
+                  "Continue to Verify",
                   style: subtitle.copyWith(
                       color: Colors.white, fontWeight: FontWeight.w600),
                 ),
@@ -74,11 +65,11 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(height: 24),
               const AppBackButton(),
-              const SizedBox(height: 34),
-              Text("To continue, we need to verify your identity",
+              const SizedBox(height: 24),
+              Text("Verify your bank verification number (BVN)",
                   textAlign: TextAlign.center,
                   style: headling1.copyWith(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: const Color(0xff333333),
                     fontWeight: FontWeight.bold,
                   )),
@@ -87,7 +78,8 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
                 alignment: Alignment.center,
                 child: Image.asset(
                   loadAsset("verify_img.png"),
-                  height: 210,
+                  //olor: VerificationPlugin.getBaseColor(),
+                  height: 180,
                 ),
               ),
             ])),

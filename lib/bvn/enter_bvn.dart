@@ -182,10 +182,13 @@ class _EnterBVNScreenState extends State<EnterBVNScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       width: double.infinity,
-                      height: 130,
+                      height: 120,
                       decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffEDE8FB)),
-                          color: const Color(0xffFAFAFF),
+                          border: Border.all(
+                              color: VerificationPlugin.getBaseColor()
+                                  .withOpacity(0.1)),
+                          color: VerificationPlugin.getBaseColor()
+                              .withOpacity(0.008),
                           borderRadius: BorderRadius.circular(12)),
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

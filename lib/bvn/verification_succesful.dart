@@ -1,5 +1,6 @@
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:raven_verification/textstyle.dart';
 
 class VerificationSuccessful extends StatefulWidget {
   final String type;
@@ -46,35 +47,20 @@ class _VerificationSuccessfulState extends State<VerificationSuccessful> {
                     children: [
                       SizedBox(height: size.height * 0.06),
                       const SizedBox(height: 24),
-                      const Text("🥳Verification Successsful",
-                          style: TextStyle(
+                      Text("🥳Verification Sumitted",
+                          style: subtitle.copyWith(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
                       Text(
-                        "Your ${widget.type} verifiction was successful.. Thank You",
+                        "You will be notified once your ${widget.type} verification process is completed.",
                         textAlign: TextAlign.center,
+                        style: subtitle.copyWith(),
                       ),
-                      SizedBox(height: size.height * 0.04),
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Image.asset(
-                            loadAsset("success.png"),
-                            color: VerificationPlugin.getBaseColor(),
-                            height: 120,
-                          ),
-                          Positioned(
-                            right: 0,
-                            bottom: -12,
-                            child: Image.asset(
-                              loadAsset("check.png"),
-                              height: 44,
-                              width: 28,
-                              color: VerificationPlugin.getBaseColor(),
-                            ),
-                          ),
-                        ],
-                      )
+                      SizedBox(height: size.height * 0.02),
+                      Image.asset(
+                        loadAsset("success_image.png"),
+                        width: size.width,
+                      ),
                     ]),
               )),
         ),
