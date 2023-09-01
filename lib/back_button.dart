@@ -1,4 +1,3 @@
-import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
 
 class AppBackButton extends StatelessWidget {
@@ -14,8 +13,8 @@ class AppBackButton extends StatelessWidget {
         child: Row(
           children: [
             Container(
-                height: 32,
-                width: 32,
+                height: 34,
+                width: 34,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey.withOpacity(0.5)),
                     shape: BoxShape.circle,
@@ -25,11 +24,11 @@ class AppBackButton extends StatelessWidget {
             const SizedBox(
               width: 8,
             ),
-            Text("Back",
-                style: bodyText.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: textColor ?? Colors.black,
-                    fontSize: 14))
+            // Text("Back",
+            //     style: bodyText.copyWith(
+            //         fontWeight: FontWeight.w600,
+            //         color: textColor ?? Colors.black,
+            //         fontSize: 14))
           ],
         ));
   }

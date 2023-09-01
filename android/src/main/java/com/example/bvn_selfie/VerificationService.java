@@ -71,6 +71,7 @@ public class VerificationService implements ImageAnalysis.Analyzer {
     private  int step=1;
     private boolean running=false;
 
+
     VerificationService(Activity activity,SurfaceTexture surfaceTexture,BVNCallbacks callbacks,long textureId){
        this.surfaceTexture=surfaceTexture;
        this.callbacks=callbacks;
@@ -277,7 +278,24 @@ public class VerificationService implements ImageAnalysis.Analyzer {
             if(checkSmileAndBlick(face)){
                 if(step==2){
                     step=-1;
-                    takePhoto();
+                    thread = new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(800);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                                pluginActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        takePhoto();
+                                    }
+                                });
+                        }
+                    });
+                    thread.start();
+
                 }
             }
 
@@ -374,8 +392,6 @@ public class VerificationService implements ImageAnalysis.Analyzer {
        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
            processCameraProvider.unbindAll();
            processCameraProvider.shutdown();
-         //  surfaceTexture.release();
-         //  surfaceTexture.detachFromGLContext();
        }
    }
 
