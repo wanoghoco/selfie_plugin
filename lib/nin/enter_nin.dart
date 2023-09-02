@@ -20,6 +20,9 @@ class EnterNinScreen extends StatefulWidget {
 }
 
 class _EnterNinScreenState extends State<EnterNinScreen> {
+  _EnterNinScreenState() {
+    ninController.text = VerificationPlugin.getClientNumber() ?? "";
+  }
   final ninController = TextEditingController();
   var apiResponse = {};
   @override
@@ -133,42 +136,38 @@ class _EnterNinScreenState extends State<EnterNinScreen> {
                     const SizedBox(
                       height: 24,
                     ),
-                    if (VerificationPlugin.getClientNumber() == null ||
-                        VerificationPlugin.getClientNumber().toString().length <
-                            10) ...[
-                      VerificationTextField(
-                        controller: ninController,
-                        labelText: "Enter NIN",
-                        hintText: "01234567899",
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.info_outline,
-                              size: 20, color: Color(0xffEA872D)),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: RichText(
-                                text: TextSpan(
-                                    text: "Dial ",
-                                    children: const [
-                                      TextSpan(
-                                          text: " *346# ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xffEA872D),
-                                              fontSize: 13)),
-                                      TextSpan(
-                                          text:
-                                              "to get your BVN Number, must be with the registered phone number.")
-                                    ],
-                                    style: subtitle.copyWith(fontSize: 13))),
-                          )
-                        ],
-                      )
-                    ],
+                    VerificationTextField(
+                      controller: ninController,
+                      labelText: "Enter NIN",
+                      hintText: "01234567899",
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.info_outline,
+                            size: 20, color: Color(0xffEA872D)),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "Dial ",
+                                  children: const [
+                                    TextSpan(
+                                        text: " *346# ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xffEA872D),
+                                            fontSize: 13)),
+                                    TextSpan(
+                                        text:
+                                            "to get your BVN Number, must be with the registered phone number.")
+                                  ],
+                                  style: subtitle.copyWith(fontSize: 13))),
+                        )
+                      ],
+                    )
                   ])),
         ),
       ),

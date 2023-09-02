@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:raven_verification/app_data_helper.dart';
 import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/doc/upload_photo.dart';
@@ -81,8 +80,7 @@ class _CameraViewState extends State<CameraView>
         setState(() {});
       }
       if (cameraController.value.hasError) {
-        Fluttertoast.showToast(
-            msg: 'Camera error ${cameraController.value.errorDescription}');
+        showAlert('Camera error ${cameraController.value.errorDescription}');
       }
     });
   }
@@ -214,8 +212,7 @@ class _CameraViewState extends State<CameraView>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Fluttertoast.showToast(
-                                msg: "rotation not supported");
+                            showAlert("not supported");
                           },
                           child: Image.asset(
                             loadAsset("rotate.png"),

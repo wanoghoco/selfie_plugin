@@ -9,7 +9,6 @@ import 'package:raven_verification/bvn/verification_succesful.dart';
 import 'package:raven_verification/server/server.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class PreviewScreen extends StatefulWidget {
   final String imagePath;
@@ -162,14 +161,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
         .uploadFile(filePath, form);
     Navigator.pop(context);
     try {
-      Fluttertoast.showToast(
-          msg: response['message'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: VerificationPlugin.getBaseColor(),
-          textColor: Colors.white,
-          fontSize: 16.0);
+      showAlert(response['message']);
       if (response['status'] == "success") {
         Navigator.pushReplacement(
             context,
