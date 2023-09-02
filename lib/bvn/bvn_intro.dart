@@ -3,6 +3,7 @@ import 'package:raven_verification/back_button.dart';
 import 'package:raven_verification/bvn/enter_bvn.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:raven_verification/widget/verification_button.dart';
 
 class BvnIntroScreen extends StatefulWidget {
   const BvnIntroScreen({super.key});
@@ -17,74 +18,61 @@ class _BvnIntroScreenState extends State<BvnIntroScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Item(
-            asset: "info.png",
-            subTitle:
-                "We use information you provide and data about your device. to learn more , see the privacy statement",
-            title: "How we verify you",
-          ),
-          const SizedBox(height: 24),
-          const Item(
-            asset: "icon_secure.png",
-            title: "Fast and secure",
-            subTitle: "By selecting “continue” you agree to the privacy policy",
-          ),
-          SizedBox(height: size.height * 0.09),
-          SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EnterBVNScreen()));
-                },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                    backgroundColor: MaterialStateProperty.all(
-                        VerificationPlugin.getBaseColor())),
-                child: Text(
-                  "Continue to Verify",
-                  style: subtitle.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w600),
+        backgroundColor: Colors.white,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const SizedBox(height: 34),
+            Text("Verify your bank verification number (BVN)",
+                style: headling1.copyWith(
+                  fontSize: 20,
+                  color: const Color(0xff333333),
+                  fontWeight: FontWeight.bold,
+                )),
+            const SizedBox(height: 24),
+            const Item(
+              asset: "info.png",
+              subTitle:
+                  "We cross-reference the provided BVN with government databases to ensure data accuracy and authenticity.",
+              title: "How we verify you",
+            ),
+            const SizedBox(height: 24),
+            const Item(
+              asset: "icon_secure.png",
+              title: "Fast and secure",
+              subTitle:
+                  "You don’t have to wait long to get verified, in less than few second your details would be verified.",
+            ),
+            const SizedBox(height: 34),
+            VerificationButton(
+              onPressed: () async {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const EnterBVNScreen()));
+              },
+              buttonText: "Continue to Verify",
+            ),
+            const SizedBox(height: 28)
+          ]),
+        ),
+        body: Stack(
+          children: [
+            Image.asset(loadAsset("bvn_bg.png")),
+            const SafeArea(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: 24,
                 ),
-              )),
-          const SizedBox(height: 34)
-        ]),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SizedBox(height: 24),
-              const AppBackButton(),
-              const SizedBox(height: 24),
-              Text("Verify your bank verification number (BVN)",
-                  textAlign: TextAlign.center,
-                  style: headling1.copyWith(
-                    fontSize: 18,
-                    color: const Color(0xff333333),
-                    fontWeight: FontWeight.bold,
-                  )),
-              const SizedBox(height: 34),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  loadAsset("verify_img.png"),
-                  //olor: VerificationPlugin.getBaseColor(),
-                  height: 180,
-                ),
-              ),
-            ])),
-      ),
-    );
+                Padding(
+                  padding: EdgeInsets.only(left: 24),
+                  child: AppBackButton(),
+                )
+              ],
+            ))
+          ],
+        ));
   }
 }
 
@@ -109,7 +97,7 @@ class Item extends StatelessWidget {
           padding: const EdgeInsets.all(9),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: VerificationPlugin.getBaseColor().withOpacity(0.1)),
+              color: VerificationPlugin.getBaseColor().withOpacity(0.06)),
           child: Image.asset(
             loadAsset(asset),
             color: VerificationPlugin.getBaseColor(),

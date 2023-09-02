@@ -10,6 +10,7 @@ import 'package:raven_verification/progress_loader.dart';
 import 'package:raven_verification/server/server.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:raven_verification/widget/verification_textfield.dart';
 
 class EnterNinScreen extends StatefulWidget {
   const EnterNinScreen({super.key});
@@ -116,66 +117,57 @@ class _EnterNinScreenState extends State<EnterNinScreen> {
                     const SizedBox(height: 24),
                     const AppBackButton(),
                     const SizedBox(height: 24),
-                    Text("Verify Your NIN",
+                    Text("Enter your NIN ",
                         style: headling1.copyWith(
                           fontSize: 20,
-                          color: VerificationPlugin.getBaseColor(),
+                          color: const Color(0xff333333),
                           fontWeight: FontWeight.bold,
                         )),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Text(
                         "We need your NIN so you can get verified on Raven bank",
-                        style:
-                            subtitle.copyWith(color: const Color(0xff8B8B8B))),
+                        style: subtitle.copyWith(
+                            height: 1.5,
+                            color: const Color(0xff646464),
+                            fontSize: 14.5)),
                     const SizedBox(
                       height: 24,
                     ),
                     if (VerificationPlugin.getClientNumber() == null ||
                         VerificationPlugin.getClientNumber().toString().length <
                             10) ...[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text("Provide Your NIN",
-                                  style: subtitle.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color:
-                                          const Color.fromARGB(255, 78, 78, 78),
-                                      fontSize: 14)),
-                              Text(" *",
-                                  style: subtitle.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.red,
-                                      fontSize: 14)),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          TextField(
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 16),
-                              keyboardType: TextInputType.number,
-                              controller: ninController,
-                              decoration: InputDecoration(
-                                  hintText: "Enter your NIN here...",
-                                  hintStyle:
-                                      subtitle.copyWith(color: Colors.grey),
-                                  fillColor: const Color(0xFFF4F4F4),
-                                  filled: true,
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xFFF4F4F4), width: 0)),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xFFF4F4F4), width: 0)),
-                                  border: InputBorder.none)),
-                        ],
+                      VerificationTextField(
+                        controller: ninController,
+                        labelText: "Enter NIN",
+                        hintText: "01234567899",
                       ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.info_outline,
+                              size: 20, color: Color(0xffEA872D)),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: RichText(
+                                text: TextSpan(
+                                    text: "Dial ",
+                                    children: const [
+                                      TextSpan(
+                                          text: " *346# ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xffEA872D),
+                                              fontSize: 13)),
+                                      TextSpan(
+                                          text:
+                                              "to get your BVN Number, must be with the registered phone number.")
+                                    ],
+                                    style: subtitle.copyWith(fontSize: 13))),
+                          )
+                        ],
+                      )
                     ],
                   ])),
         ),

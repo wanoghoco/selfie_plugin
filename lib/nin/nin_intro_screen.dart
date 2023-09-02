@@ -4,6 +4,7 @@ import 'package:raven_verification/doc/select_doc_type.dart';
 import 'package:raven_verification/nin/enter_nin.dart';
 import 'package:raven_verification/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:raven_verification/widget/verification_button.dart';
 
 class NInIntroScreen extends StatefulWidget {
   const NInIntroScreen({super.key});
@@ -18,81 +19,71 @@ class _NInIntroScreenState extends State<NInIntroScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Item(
-            asset: "info.png",
-            subTitle:
-                "We use information you provide and data about your device. to learn more , see the privacy statement",
-            title: "How we verify you",
-          ),
-          const SizedBox(height: 24),
-          const Item(
-            asset: "icon_secure.png",
-            title: "Fast and secure",
-            subTitle: "By selecting “continue” you agree to the privacy policy",
-          ),
-          SizedBox(height: size.height * 0.09),
-          SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (VerificationPlugin.getVerificationType() ==
-                      VerificationType.ninverification) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EnterNinScreen()));
-                    return;
-                  }
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SelectDocType()));
-                },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                    backgroundColor: MaterialStateProperty.all(
-                        VerificationPlugin.getBaseColor())),
-                child: Text(
-                  "Verify Now",
-                  style: subtitle.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w600),
+        backgroundColor: Colors.white,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const SizedBox(height: 34),
+            Text("Verify your National Identification Number (NIN)",
+                style: headling1.copyWith(
+                  fontSize: 20,
+                  color: const Color(0xff333333),
+                  fontWeight: FontWeight.bold,
+                )),
+            const SizedBox(height: 24),
+            const Item(
+              asset: "info.png",
+              subTitle:
+                  "We cross-reference the provided NIN with government databases to ensure data accuracy and authenticity.",
+              title: "How we verify you",
+            ),
+            const SizedBox(height: 24),
+            const Item(
+              asset: "icon_secure.png",
+              title: "Fast and secure",
+              subTitle:
+                  "You don’t have to wait long to get verified, in less than few second your details would be verified.",
+            ),
+            const SizedBox(height: 38),
+            SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: VerificationButton(
+                    onPressed: () async {
+                      if (VerificationPlugin.getVerificationType() ==
+                          VerificationType.ninverification) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EnterNinScreen()));
+                        return;
+                      }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SelectDocType()));
+                    },
+                    buttonText: "Verify Now")),
+            const SizedBox(height: 28)
+          ]),
+        ),
+        body: Stack(
+          children: [
+            Image.asset(loadAsset("nin_bg.png")),
+            const SafeArea(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: 24,
                 ),
-              )),
-          const SizedBox(height: 34)
-        ]),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SizedBox(height: 24),
-              const AppBackButton(),
-              const SizedBox(height: 34),
-              Text("To continue, we need to verify your identity",
-                  textAlign: TextAlign.center,
-                  style: headling1.copyWith(
-                    fontSize: 20,
-                    color: const Color(0xff333333),
-                    fontWeight: FontWeight.bold,
-                  )),
-              const SizedBox(height: 34),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  loadAsset("verify_img.png"),
-                  height: 210,
-                ),
-              ),
-            ])),
-      ),
-    );
+                Padding(
+                  padding: EdgeInsets.only(left: 24),
+                  child: AppBackButton(),
+                )
+              ],
+            ))
+          ],
+        ));
   }
 }
 
