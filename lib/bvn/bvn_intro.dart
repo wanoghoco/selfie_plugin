@@ -22,28 +22,7 @@ class _BvnIntroScreenState extends State<BvnIntroScreen> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const SizedBox(height: 34),
-            Text("Verify your bank verification number (BVN)",
-                style: headling1.copyWith(
-                  fontSize: 20,
-                  color: const Color(0xff333333),
-                  fontWeight: FontWeight.bold,
-                )),
-            const SizedBox(height: 24),
-            const Item(
-              asset: "info.png",
-              subTitle:
-                  "We cross-reference the provided BVN with government databases to ensure data accuracy and authenticity.",
-              title: "How we verify you",
-            ),
-            const SizedBox(height: 24),
-            const Item(
-              asset: "icon_secure.png",
-              title: "Fast and secure",
-              subTitle:
-                  "You don’t have to wait long to get verified, in less than few second your details would be verified.",
-            ),
-            const SizedBox(height: 34),
+            const SizedBox(height: 20),
             VerificationButton(
               onPressed: () async {
                 Navigator.push(
@@ -58,7 +37,42 @@ class _BvnIntroScreenState extends State<BvnIntroScreen> {
         ),
         body: Stack(
           children: [
-            Image.asset(loadAsset("bvn_bg.png")),
+            Column(
+              children: [
+                Image.asset(loadAsset("bvn_bg.png")),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.height * 0.05),
+                      Text("Verify your bank verification number (BVN)",
+                          style: headling1.copyWith(
+                            fontSize: 20,
+                            color: const Color(0xff333333),
+                            fontWeight: FontWeight.bold,
+                          )),
+                      SizedBox(height: size.height * 0.03),
+                      const Item(
+                        asset: "info.png",
+                        subTitle:
+                            "We cross-reference the provided BVN with government databases to ensure data accuracy and authenticity.",
+                        title: "How we verify you",
+                      ),
+                      const SizedBox(height: 24),
+                      const Item(
+                        asset: "icon_secure.png",
+                        title: "Fast and secure",
+                        subTitle:
+                            "You don’t have to wait long to get verified, in less than few second your details would be verified.",
+                      ),
+                      SizedBox(
+                        height: size.height * 0.08,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
             const SafeArea(
                 child: Column(
               children: [
